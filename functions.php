@@ -23,6 +23,13 @@ if(is_singular('cour')){
     }
     }
 
+ 
+    
+        wp_enqueue_script( 'addContent',get_stylesheet_directory_uri(). '/js/addContent.js', array(),'', true );
+        wp_localize_script( 'addContent', 'template_form',
+         array('ajaxurl'=> admin_url( 'admin-ajax.php' ))
+        );
+       
 }
 add_action('wp_enqueue_scripts', 'enqueue_child_theme_styles');
 
@@ -513,7 +520,7 @@ if (!empty($primaire) && !is_wp_error($primaire)) {
     $primaire_slug = $primaire[0]->slug;
     $post_link = home_url('/primaire/' . $primaire_slug. '/' .$sujet_terms[0]->slug .'/'.$post->post_name.'/');
 
-var_dump($post_link);
+//var_dump($post_link);
 } else {
     $primaire_slug = '';
 }
@@ -562,7 +569,7 @@ if (!empty($college) && !is_wp_error($college)) {
 		if (!empty($cpge_niveau) && !is_wp_error($cpge_niveau)) {
             $cpge_niveau_slug = $cpge_niveau[0]->slug;
             $cpge_niveau_child=$cpge_niveau[1]->slug;
-            var_dump($cpge_niveau_child);
+            //var_dump($cpge_niveau_child);
 			$post_link = str_replace('%niveau%', 'cpge', $post_link);
             $post_link = str_replace('%lyceeniveau%', $cpge_niveau_slug , $post_link);
             $post_link = str_replace('%lyceeClass%', $cpge_niveau_child, $post_link);
@@ -751,9 +758,9 @@ class wp_bootstrap_navwalker extends Walker_Nav_Menu {
 			// if ( $args->has_children && $depth === 0 ) {
 			if ( $args->has_children && $depth === 0 ) {
    				$atts['href'] = ! empty( $item->url ) ? $item->url : ''; // new line
-				$atts['data-bs-toggle']	= 'dropdown';
+				//$atts['data-bs-toggle']	= 'dropdown';
 				$atts['class']			= 'dropdown-toggle';
-				$atts['aria-haspopup']  = 'true';
+				//$atts['aria-haspopup']  = 'true';
 				
 			} else {
 				$atts['href'] = ! empty( $item->url ) ? $item->url : '';
@@ -1255,6 +1262,7 @@ else{
     'supports' => ['title', 'editor', 'thumbnail'],
     'has_archive' => true,
     'rewrite' => ['slug' => 'lessons'],
+    'show_ui' => true,
 ]);
 // Register Exercise Post Type
 register_post_type('exercise', [
@@ -1290,6 +1298,114 @@ function create_custom_taxonomies() {
    
 } 
 add_action('init', 'create_custom_taxonomies');*/
+/*** add meta box */
+
+
+class WPOrg_Meta_Box {
+
+
+	/**
+	 * Set up and add the meta box.
+	 */
+	public static function add() {
+		$screens = ['lesson' ];
+		foreach ( $screens as $screen ) {
+            var_dump($screen);
+			add_meta_box(
+				'wporg_box_id',          // Unique ID
+				'Custom Meta Box Title', // Box title
+				[ self::class, 'html' ],   // Content callback, must be of type callable
+				$screen                  // Post type
+			);
+		}
+	}
+
+
+	/**
+	 * Save the meta box selections.
+	 *
+	 * @param int $post_id  The post ID.
+	 */
+    public static function save(int $post_id) {
+        if (array_key_exists('video_lesson', $_POST) && array_key_exists('lesson_title', $_POST)) {
+            update_post_meta(
+                $post_id,
+                '_lesson_videos',
+                $_POST['video_lesson']
+            );
+            update_post_meta(
+                $post_id,
+                '_lesson_title',
+                $_POST['lesson_title']
+            );
+        }
+    }
+
+/*** add multiples a videos and multiples explination   */
+	/**
+	 * Display the meta box HTML to the user.
+	 *
+	 * @param WP_Post $post   Post object.
+	 */
+	public static function html( $post ) {
+		$videos = get_post_meta( $post->ID, '_lesson_videos', true );
+        $content=get_post_meta($post->ID,'_lesson_title',true);
+
+        $videos =is_array($videos) ? $videos : [] ;
+        $content= is_array($content) ? $content : [];
+
+        //var_dump($content);
+		?>
+         <div id="lesson_additional"> 
+		<label for="wporg_field" class="wporg_field_class">Add Aditional lesson content as video and it's explaination</label>
+       <?php foreach($videos as $index =>$video):?>
+        <div class="lesson_item">
+		<input type="url" name="video_lesson[]" value="<?php echo esc_url($video);?>">
+        <input type="text"  name="lesson_title[]" value="<?php echo esc_attr($content[$index]);?>   ">
+                        
+        <button type="button" class="lesson_remove">Remove</button>
+       </div>
+  <?php endforeach; ?>
+    </div>
+
+    <button type="button" id="lesson_add" >add new video</button>
+    <script>
+
+document.addEventListener("DOMContentLoaded",function() {
+
+$addButton=document.getElementById('lesson_add')
+$addButton.addEventListener('click',function(){
+
+    let container=document.getElementById('lesson_additional')
+    let newItem=document.createElement('div')
+    newItem.classList.add('lesson_item')
+    newItem.innerHTML=`
+                    <input type="url" name="video_lesson[]" placeholder="Video URL">
+                    <input type="text" name="lesson_title[]" placeholder="Video explanation" >
+                
+                    <button type="button" class="lesson_remove">Remove</button>
+                `;
+container.appendChild(newItem)
+
+});
+/** remove some of the added content */
+ 
+document.querySelectorAll('.lesson_remove').forEach(function(button){
+    console.log(button)
+button.addEventListener('click',function(){
+    console.log('clicked')
+    button.parentElement.remove()
+})
+})
+})
+    </script>
+		<?php
+	}
+}
+
+add_action( 'add_meta_boxes', [ 'WPOrg_Meta_Box', 'add' ] );
+add_action( 'save_post', [ 'WPOrg_Meta_Box', 'save' ] );
+
 
 
 ?>

@@ -7,16 +7,17 @@ $term_image = get_term_meta($term->term_id, 'term_image', true);
 $term_description = get_term_meta($term->term_id, 'term_description', true);
 ?>
 <main class="niveauPgae">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="<?php echo get_home_url(); ?>" title=""><i class="fa-solid fa-house"></i>Acceuil</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><?php echo get_queried_object()->name;?></li>
+  </ol>
+</nav>
 <div class="container-fluid seconSectin">
 
 <div class="row">
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb mt-3">
-    <li class="breadcrumb-item"><a href="<?php echo get_home_url(); ?>" title="">Acceuil</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><?php echo get_queried_object()->name;?></li>
-  </ol>
-</nav>
+
 
 <div class="col-md-7 offset-md-1">
     <div class="hdgu">

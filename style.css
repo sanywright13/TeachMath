@@ -17,18 +17,37 @@ body{
 }   
 .menu-item{
     flex-grow: 1 !important;
-    max-width:100px;
+    max-width:94px;
 }
 .navbar-expand-lg .navbar-nav{
     flex-grow: 1 !important;
     justify-content: center;
     
 }
+/*** cour template header*/
+
+
 .navbar.bg-light{
-    background-color:#20B34B !important;
+    background-color: #1F585B !important;
     height: 80px;
 }
+.navbar-brand img{
+    width: 140px;
+    height: auto;
+}
 
+.navbar.navcour{
+    background-color: #171F32 !important;
+}
+
+.navbar.navcour a.menu-link{
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.98981rem;
+    text-decoration: none;
+    transition: all 0.3s ease-in;
+    text-transform: uppercase;
+}
 .pre-imagegg
 {
     width: 100%;
@@ -84,21 +103,64 @@ li.menu-item{
     padding:5px;
 }
 a.menu-link{
-    color:#ffff;
+    color: #ffff;
     font-weight: 700;
-    font-size: 0.8981rem;
+    font-size: 0.96981rem;
     text-decoration: none;
     transition: all 0.3s ease-in;
-
+    text-transform: uppercase;
 }
 a.menu-link:hover{
-    color:#2248A2;  
+    color:#95afe9; 
 }
+
 .steaky-element{
    height: 80px;
 }
 nav .container-fluid{
     top:0;
+}
+/*** dropdown animation*/
+
+.dropdown-menu{
+    display:none;
+}
+
+.dropdown > .dropdown-toggle:hover , .dropdown  .show{
+    display: block;
+    position: relative;
+    z-index: 100;
+}
+    
+ .navbar-nav .dropdown-menu {
+    background-color: #1F585B;
+    position: static;
+    border-radius: 0;
+    top: 55px;
+    width: 214px;
+    border-bottom: 6px solid #b0c1ff;
+}
+.dropdown-menu .menu-link{
+    padding: 2px 2px 2px 9px;
+    font-size: .98rem;
+    line-height: 1.7;
+
+}
+ /* Include the CSS from above here */
+ @keyframes hoverAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+  }
+ 
+     .animate_dropdown.show {
+    display: block;
+    animation: hoverAnimation 0.5s forwards;
 }
 .steaky{
 position: fixed;
@@ -126,7 +188,7 @@ z-index: 1000;
 input[type="search"]{
 
     border-radius: 12px;
-    background: #fff
+    background: #D9D9D9;
 }   
 .search-container{
     position: relative; 
@@ -337,9 +399,23 @@ section.seconSectin .oiut img{
 }
 .niveauPgae .seconSectin{
     background-color: #0D0C38;
-    color:#ffff;
+    color: #ffff;
+    padding: 24px 1px 3px 1px;
 }
 
+ol.breadcrumb{
+    margin-bottom: 0;
+    padding: 20px 9px 20px 9px;
+}
+nav[aria-label="breadcrumb"]{
+    background-color: #212529;
+}
+.breadcrumb-item a{
+    font-size: 1.109rem;
+    font-weight: 700;
+    color: #ffff;
+    text-decoration: none;
+}
 .niveauPgae .breadcrumb-item.active {
     color: #fff;
   }
@@ -844,4 +920,175 @@ body {
 }
 .scfrb{
     display: none;
+}
+div.sidebaryt{
+    background-color: #EFEFEF;
+}
+div.sidebaryt .firstul{
+
+    margin-left:0;
+}
+.sidebaryt .fs-5:before {
+    content: '';
+    width: 50px;
+    height: 2px;
+    bottom: 16px;
+    position: absolute;
+    display: inline-block;
+    background-color: #152F72;
+}
+.sidebaryt .link-body-emphasis {
+
+position: relative;
+}
+div.sidebaryt .firstul li {
+width:100%;
+}
+div.sidebaryt .firstul li .sectioncour{
+
+    margin-left:0;
+    width: 100%;
+    background-color: #1F585B;
+    color: #ffff;
+    padding: 2px;
+}
+div.sidebaryt .firstul li  .sectioncour button.d-inline-flex.align-items-center{
+    width: 100%;
+    font-size: 1.22rem;
+    font-weight: 700;
+    color: #ffff;
+
+}
+
+div.sidebaryt .firstul li .collapse.show ul.btn-toggle-nav {
+    margin-left: 0;
+}
+div.sidebaryt .firstul li .collapse.show ul.btn-toggle-nav li button.d-inline-flex{
+    background-color: #fff0;
+    box-shadow: none;
+    border-bottom: 1px #d7d7d7 solid;
+    width: 100%;
+    border-radius: 0;
+    font-size: 1.0102rem;
+    border-radius: 0;
+    font-weight: 500;
+    line-height: 1.4000000001;
+    padding: 0px 6px 0px 0px;
+    transition: 0.5s all ease;
+    height: 67px;
+}
+div.sidebaryt .firstul li .collapse.show ul.btn-toggle-nav li button.d-inline-flex:hover .hidden-classicon{
+animation: iconarrowhover 1s forwards;
+}
+div.sidebaryt .firstul li .collapse.show ul.btn-toggle-nav li button.d-inline-flex:hover {
+  background-color: #ffff;
+    }
+@keyframes iconarrowhover {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 100%;
+    }
+}
+div.sidebaryt .firstul li .fa-book-open:before {
+    content: "\f518";
+    color: #e5810b;
+    margin-right: 7px;
+}
+div.sidebaryt .collapse.show ul.btn-toggle-nav li button .fa-file:before {
+    content: "\f15b";
+    color: #0E0C6A;
+    font-size: 1.235rem;
+    margin-right: 9px;
+}
+.hidden-classicon{
+    opacity:0;
+    background-color: #1544ad;
+    color: #fff;
+    padding: 9px;
+    border-radius: 5px;
+    margin-right: 6px;
+    transition: 0.4s all ease-in;
+    height: 100%;
+}
+
+div.sidebaryt .collapse.show ul.btn-toggle-nav li button:hover {
+    content: "\f15b";
+    color: #0E0C6A;
+    font-size: 1.235rem;
+    margin-right: 9px;
+
+}
+.cour-page .titreh1 {
+    font-size: 2.45rem;
+    line-height: 1.5;
+    font-weight: 700;
+    margin-left: 5em;
+}
+.cour-page  [aria-label="breadcrumb"] {
+    background-color: #ffff;
+}
+.cour-page  [aria-label="breadcrumb"] a{
+    color: #17469d;
+}
+.cour-page h2.gfpr {
+    font-size: 1.42rem;
+    font-weight: 600;
+    color: #08837d;
+    padding: 2px 2px 11px 0px;
+}
+.cour-page .piek {
+    font-size: 1.14rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+
+}
+@media (min-width: 768px) {
+    .cour-page   .col-md-4 {
+        flex: 0 0 auto;
+        width: 27.333333%;
+    }
+}
+.fgoru.active{
+position: relative;
+}
+.cour-page .piek:before {
+    content: '';
+    width: 81px;
+    height: 1.25px;
+    bottom: 0px;
+    position: absolute;
+    display: inline-block;
+    background-color: #152F72;
+}
+/*** admin panel*/
+.lesson_additional {
+    padding: 8px 5px 11px 23px;
+}
+.inside .wporg_field_class{
+    font-size: 1.4rem;
+    color: #ff0047;
+    line-height: 1.75;
+    font-weight: 700;
+}
+
+.cour-page ol.breadcrumb {
+    margin-bottom: 0;
+    padding: 14px 9px 11px 0px;
+    margin-left: 3px;
+}
+
+.cour-page .breadcrumb-item a {
+    font-size: .9rem;
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.cour-page .list-group .list-group-item{
+    padding: 20px 9px 20px 12px;
+    color: #1a1e48;
+    font-size: 1.2rem;
+    line-height: 1.6;
 }

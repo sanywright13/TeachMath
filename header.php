@@ -10,16 +10,17 @@
 </head>
 <body>
 <header class="sthyiik">
+  <?php if(is_home('cour')):?>
 <div class="head-nav">
-
 </div>
+ <?php endif; ?>
 <div class="steaky-element ">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="  navbar <?php  //if (is_singular('cour')){ echo 'navcour';}?> navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="<?php echo get_home_url(); ?>"><?php 
    // echo wp_get_attachment_image( 13, "full", "", array( "class" => "img-responsive" ) ); 
     ?>
-   <img src="http://localhost/wp-content/uploads/2024/06/White-Black-M-Letter-Design-Business-Identity-for-Digital-Design-Company-Logo.png" width="70" height="70" alt="">
+   <img src="http://localhost/wp-content/uploads/2024/07/Blue-and-Orange-Flat-Illustrative-Education-Logo-2-1.png" >
     
 </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

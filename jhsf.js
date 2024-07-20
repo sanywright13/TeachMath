@@ -13,20 +13,20 @@ window.addEventListener("scroll",function(){
 })
 
 
-/*
-document.querySelectorAll('.ssheader ').forEach(box =>{
-    console.log(box)
+/*** dropdown hover */
+
+let dropdown_enter=document.querySelector('.dropdown , .dropdown > .dropdown-menu');
+let dropdown_out=document.querySelector(' .dropdown > .dropdown-menu');
+let dropdownMenu=document.querySelector('#menu-header-menu .dropdown-menu');
+
+
+dropdown_enter.addEventListener('mouseenter', function () {
     
-    box.addEventListener('mouseenter', ()=>{
-   
-      icon=this.querySelector('.circle-icon');
-        box.classList.add('activey');
-    
-    });
-    box.addEventListener('mouseleave', () => {
- 
-        box.classList.remove('activey');
- 
-      });
-})*/
+    dropdownMenu.classList.add(['show'],['animate_dropdown'])
+    console.log('gg'+dropdown1)
+  });
+
+  dropdown_out.addEventListener('mouseleave', function () {
+    dropdownMenu.classList.remove(['show'],['animate_dropdown']);
+  });
 });
