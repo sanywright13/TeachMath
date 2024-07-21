@@ -15,9 +15,9 @@ window.addEventListener("scroll",function(){
 
 /*** dropdown hover */
 
-let dropdown_enter=document.querySelector('.dropdown , .dropdown > .dropdown-menu');
-let dropdown_out=document.querySelector(' .dropdown > .dropdown-menu');
-let dropdownMenu=document.querySelector('#menu-header-menu .dropdown-menu');
+let dropdown_enter=document.querySelector('.dropdown ');
+let dropdown_out=document.querySelector(' .dropdown > .dropdown-menu , .dropdown + .dropdown-toggle > .dropdown-menu');
+let dropdownMenu=document.querySelector('.dropdown-menu');
 
 
 dropdown_enter.addEventListener('mouseenter', function () {

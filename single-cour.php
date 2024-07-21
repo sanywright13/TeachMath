@@ -110,8 +110,7 @@ $featured_videos=get_field('related_video');
 
 
 </div>
-<div class="col-md-8">
-<h1 class="titreh1"><?php  echo get_the_title(); ?></h1>
+<div class="col-md-8 ps-5 pt-2">
 <?php // get the courses categories 
 // Retrieve categories for the 'lesson' post type
 $taxonomy = 'niveau'; // Adjust to your custom taxonomy
@@ -182,6 +181,7 @@ if(!empty($terms[0]->name=='Lycee')){
 <?php }
 //var_dump($terms[0]);
 ?>
+<h1 class="titreh1"><?php  echo get_the_title(); ?></h1>
 
 <h2 class="gfpr"> </h2>
 

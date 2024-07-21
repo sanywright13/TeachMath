@@ -922,7 +922,7 @@ body {
     display: none;
 }
 div.sidebaryt{
-    background-color: #EFEFEF;
+    background-color: #ffff;
 }
 div.sidebaryt .firstul{
 
@@ -1024,10 +1024,10 @@ div.sidebaryt .collapse.show ul.btn-toggle-nav li button:hover {
     font-size: 2.45rem;
     line-height: 1.5;
     font-weight: 700;
-    margin-left: 5em;
+    /*margin-left: 5em;*/
 }
 .cour-page  [aria-label="breadcrumb"] {
-    background-color: #ffff;
+    background-color: #fbfbfbc7;
 }
 .cour-page  [aria-label="breadcrumb"] a{
     color: #17469d;
@@ -1080,7 +1080,7 @@ position: relative;
 }
 
 .cour-page .breadcrumb-item a {
-    font-size: .9rem;
+    font-size: .8799rem;
     font-weight: 700;
 
     text-decoration: none;
@@ -1091,4 +1091,14 @@ position: relative;
     color: #1a1e48;
     font-size: 1.2rem;
     line-height: 1.6;
+}
+body.pagecour{
+    background-color: #fbfbfb;
+}
+.lesson_page .breadcrumb-item a {
+    font-size: .9rem !important;
+  
+}
+.lesson_page .breadcrumb-item.active {
+    color: rgb(255 255 255 / 75%) !important;
 }

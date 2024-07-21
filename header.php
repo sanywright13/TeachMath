@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <?php wp_head(); ?>
 </head>
-<body>
+<body class="<?php if (is_singular('cour')){ echo 'pagecour'; }?>">
 <header class="sthyiik">
   <?php if(is_home('cour')):?>
 <div class="head-nav">

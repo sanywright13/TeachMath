@@ -1327,17 +1327,43 @@ class WPOrg_Meta_Box {
 	 * @param int $post_id  The post ID.
 	 */
     public static function save(int $post_id) {
-        if (array_key_exists('video_lesson', $_POST) && array_key_exists('lesson_title', $_POST)) {
+        if (array_key_exists('video_lesson', $_POST) || array_key_exists('lesson_title', $_POST) || 
+        array_key_exists('lesson_propriete', $_POST) || array_key_exists('lesson_section', $_POST)
+        ) {
+            if(isset( $_POST['video_lesson'])){
             update_post_meta(
                 $post_id,
                 '_lesson_videos',
                 $_POST['video_lesson']
             );
-            update_post_meta(
-                $post_id,
-                '_lesson_title',
-                $_POST['lesson_title']
-            );
+
+        }
+            if(isset($_POST['lesson_title'])){
+                update_post_meta(
+                    $post_id,
+                    '_lesson_title',
+                    $_POST['lesson_title']
+                );
+            }
+          
+            if(isset( $_POST['lesson_propriete'])){
+                update_post_meta(
+                    $post_id,
+                    '_lesson_propriete',
+                    $_POST['lesson_propriete']
+                );
+            }
+          
+
+            if(isset($_POST['lesson_section'])){
+                update_post_meta(
+                    $post_id,
+                    '_lesson_section',
+                    $_POST['lesson_section']
+                );
+            }
+         
+            
         }
     }
 
@@ -1350,15 +1376,19 @@ class WPOrg_Meta_Box {
 	public static function html( $post ) {
 		$videos = get_post_meta( $post->ID, '_lesson_videos', true );
         $content=get_post_meta($post->ID,'_lesson_title',true);
-
+        $propriete=get_post_meta($post->ID,'_lesson_propriete',true);
+        $single_section=get_post_meta($post->ID,'_lesson_section',true);
         $videos =is_array($videos) ? $videos : [] ;
         $content= is_array($content) ? $content : [];
+        $propriete=is_array($propriete) ? $propriete : [];
+        $single_section=is_array($single_section) ? $single_section : [];
 
         //var_dump($content);
 		?>
          <div id="lesson_additional"> 
-		<label for="wporg_field" class="wporg_field_class">Add Aditional lesson content as video and it's explaination</label>
-       <?php foreach($videos as $index =>$video):?>
+		<h3><label for="wporg_field" class="wporg_field_class">Add Aditional lesson videos and it's title</label>
+    </h3>
+        <?php foreach($videos as $index =>$video):?>
         <div class="lesson_item">
 		<input type="url" name="video_lesson[]" value="<?php echo esc_url($video);?>">
         <input type="text"  name="lesson_title[]" value="<?php echo esc_attr($content[$index]);?>   ">
@@ -1369,10 +1399,36 @@ class WPOrg_Meta_Box {
     </div>
 
     <button type="button" id="lesson_add" >add new video</button>
-    <script>
+<div id="new_pro_additional">
+<h3><label for="wporg_field" class="wporg_field_class">Add Aditional lesson mathematical proprieties </label></h3>
+<?php foreach($propriete as $index =>$pro):?>
+    <div class="propriete_item">
+<textarea name="lesson_propriete[]"  col="12" row="10" class="">
+<?php echo esc_attr($pro);?>    
+</textarea> 
+
+<button type="button" class="pro_remove">Remove</button>
+</div> 
+<?php endforeach;?>
+</div>
+<button type="button" id="lesson_add_pro" >add new propriety</button>
+<div id="new_additiona_section">
+<h3><label for="wporg_field" class="wporg_field_class">Add Aditional lesson mathematical section explaination </label></h3>
+<?php foreach($single_section as $index =>$section):?>
+    <div class="section_item">
+<textarea name="lesson_section[]"  col="12" row="10" class="">
+<?php echo esc_attr($section);?>    
+</textarea>  
+<button type="button" class="section_remove">Remove</button>
+</div>
+<?php endforeach;?>
+</div>
+<button type="button" id="lesson_add_section" >add new subject section</button>
+
+  <script>
 
 document.addEventListener("DOMContentLoaded",function() {
-
+ /*** add video and its title */   
 $addButton=document.getElementById('lesson_add')
 $addButton.addEventListener('click',function(){
 
@@ -1386,11 +1442,38 @@ $addButton.addEventListener('click',function(){
                     <button type="button" class="lesson_remove">Remove</button>
                 `;
 container.appendChild(newItem)
+/** remove some of the added content */
+document.querySelectorAll('.lesson_remove').forEach(function(button){
+    console.log(button)
+button.addEventListener('click',function(){
+    console.log('clicked')
+    button.parentElement.remove()
+})
+})
+})
+
+
+/** add mathematical propriety and single section*/
+let propriety_button=document.getElementById('lesson_add_pro');
+let section_button=document.getElementById('lesson_add_section');
+
+propriety_button.addEventListener('click',function(){
+console.log('ddd')
+
+let container=document.getElementById('new_pro_additional')
+    let newItem_pro=document.createElement('div')
+    newItem_pro.classList.add('propriete_item')
+    newItem_pro.innerHTML=`
+                   <textarea name="lesson_propriete[]"  col="12" row="10" class="">  
+</textarea>   
+ <button type="button" class="pro_remove">Remove</button>
+                `;
+container.appendChild(newItem_pro)
 
 });
-/** remove some of the added content */
- 
-document.querySelectorAll('.lesson_remove').forEach(function(button){
+/*** remove propriete it  */
+
+document.querySelectorAll('.pro_remove').forEach(function(button){
     console.log(button)
 button.addEventListener('click',function(){
     console.log('clicked')
@@ -1406,6 +1489,63 @@ button.addEventListener('click',function(){
 add_action( 'add_meta_boxes', [ 'WPOrg_Meta_Box', 'add' ] );
 add_action( 'save_post', [ 'WPOrg_Meta_Box', 'save' ] );
 
+/*** i will add the video and its title as shortcode */
+
+function display_lesson_video_shortcode($atts) {
+    $atts = shortcode_atts(
+        array(
+        'index' => 0,
+    ), $atts, 'lesson_video' ,'lesson_title');
+
+    global $post;
+    $videos = get_post_meta($post->ID, '_lesson_videos', true);
+    $content = get_post_meta($post->ID, '_lesson_title', true);
+
+    $videos = is_array($videos) ? $videos : [];
+    $content = is_array($content) ? $content : [];
+
+    $index = intval($atts['index']);
+
+    if (isset($videos[$index]) && !empty($videos[$index])) {
+        $video_url = $videos[$index];
+        $video_title = isset($content[$index]) ? esc_html($content[$index]) : '';
+
+        return '<div class="lesson-video">
+                    <iframe src="' . esc_url($video_url) . '" frameborder="0" allowfullscreen></iframe>
+                    <div class="lesson-title">' . $video_title . '</div>
+                </div>';
+    }
+   
+    return '';
+}
+add_shortcode('lesson_video', 'display_lesson_video_shortcode');
 
 
+function lesson_video_title_shortcode($atts) {
+    $atts = shortcode_atts(
+        array(
+        'index' => 0,
+    ), $atts, 'lesson_title' );
+
+    global $post;
+   // $videos = get_post_meta($post->ID, '_lesson_videos', true);
+    $content = get_post_meta($post->ID, '_lesson_title', true);
+
+    //$videos = is_array($videos) ? $videos : [];
+    $content = is_array($content) ? $content : [];
+
+    $index = intval($atts['index']);
+
+    if (isset($content[$index]) && !empty($content[$index])) {
+       
+        $video_title = isset($content[$index]) ? esc_html($content[$index]) : '';
+
+        return '<div class="lesson-title">
+                <h3>'. $video_title . '</h3>
+                </div>';
+    }
+   
+    return '';
+}
+add_shortcode('lesson_title', 'lesson_video_title_shortcode');
 ?>
